@@ -194,4 +194,18 @@
   strengthFills.forEach(function (fill) {
     strengthObserver.observe(fill);
   });
+
+  (function () {
+    var slides = document.querySelectorAll('.hero-slide');
+    var current = 0;
+    var total = slides.length;
+
+    function nextSlide() {
+      slides[current].classList.remove('active');
+      current = (current + 1) % total;
+      slides[current].classList.add('active');
+    }
+
+    setInterval(nextSlide, 5000);
+  })();
 })();
