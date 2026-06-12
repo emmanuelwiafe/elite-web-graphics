@@ -1001,6 +1001,61 @@ ul {
   }
 }
 
+/* ===== Quote Popup ===== */
+.quote-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.quote-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.quote-card {
+  background: #fff;
+  max-width: 520px;
+  width: 90%;
+  padding: 2.5rem 2rem;
+  border-radius: 1rem;
+  text-align: center;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
+  transform: scale(0.9);
+  transition: transform 0.4s ease;
+}
+
+.quote-overlay.active .quote-card {
+  transform: scale(1);
+}
+
+.quote-card i {
+  font-size: 2rem;
+  color: #007bff;
+  margin-bottom: 0.75rem;
+}
+
+.quote-card blockquote {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #333;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.quote-card .quote-author {
+  color: #007bff;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
 /* ===== Zoom-Activated Watermark ===== */
 #watermark {
   position: fixed;

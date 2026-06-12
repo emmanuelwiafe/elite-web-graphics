@@ -208,4 +208,73 @@
 
     setInterval(nextSlide, 5000);
   })();
+
+  /* ── Random Motivational Quote ── */
+  (function () {
+    var quotes = [
+      { text: 'Design is not just what it looks like and feels like. Design is how it works.', author: 'Steve Jobs' },
+      { text: 'The best way to predict the future is to create it.', author: 'Peter Drucker' },
+      { text: 'Your website is the center of your digital ecosystem, like a new store opening day — 24/7/365.', author: 'John M. key' },
+      { text: 'Good web design is about communication, not decoration.', author: 'Andy Budd' },
+      { text: 'It doesn\'t matter how many times you fail. You only have to be right once.', author: 'Mark Cuban' },
+      { text: 'Brands are built on what people say about you when you\'re not in the room.', author: 'Jeff Bezos' },
+      { text: 'Simplicity is the ultimate sophistication.', author: 'Leonardo da Vinci' },
+      { text: 'Creativity is intelligence having fun.', author: 'Albert Einstein' },
+      { text: 'Opportunities don\'t happen. You create them.', author: 'Chris Grosser' },
+      { text: 'Make it simple, but significant.', author: 'Don Draper' },
+      { text: 'Digital design is like painting, except the paint never dries.', author: 'Neville Brody' },
+      { text: 'A user interface is like a joke. If you have to explain it, it\'s not that good.', author: 'Martin LeBlanc' },
+    ];
+
+    var btn = document.getElementById('quoteBtn');
+    if (!btn) return;
+
+    var overlay, card, blockquote, authorEl;
+
+    function buildPopup() {
+      overlay = document.createElement('div');
+      overlay.className = 'quote-overlay';
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+
+      card = document.createElement('div');
+      card.className = 'quote-card';
+
+      var icon = document.createElement('i');
+      icon.className = 'fas fa-quote-left';
+
+      blockquote = document.createElement('blockquote');
+      authorEl = document.createElement('p');
+      authorEl.className = 'quote-author';
+
+      card.appendChild(icon);
+      card.appendChild(blockquote);
+      card.appendChild(authorEl);
+      overlay.appendChild(card);
+      document.body.appendChild(overlay);
+
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) hideQuote();
+      });
+    }
+
+    function showQuote() {
+      var q = quotes[Math.floor(Math.random() * quotes.length)];
+      blockquote.textContent = '\u201C' + q.text + '\u201D';
+      authorEl.textContent = '\u2014 ' + q.author;
+      overlay.classList.add('active');
+
+      setTimeout(hideQuote, 6000);
+    }
+
+    function hideQuote() {
+      overlay.classList.remove('active');
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!overlay) buildPopup();
+      showQuote();
+    });
+  })();
 })();
