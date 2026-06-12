@@ -263,6 +263,8 @@
     </div>
   </footer>
 
+  <div id="watermark" data-text="CONFIDENTIAL COPY"></div>
+
   <a href="https://wa.link/rnzuws" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Chat on WhatsApp">
     <i class="fab fa-whatsapp"></i>
   </a>
@@ -460,6 +462,109 @@
       window.addEventListener('focus', function () {
         modalContent.classList.remove('blurred');
       });
+
+      /* ── Zoom-Activated Watermark ── */
+      (function () {
+        var wm = document.getElementById('watermark');
+        if (!wm) return;
+
+        function generateTile(text) {
+          var canvas = document.createElement('canvas');
+          var ctx = canvas.getContext('2d');
+          var size = 400;
+          canvas.width = size;
+          canvas.height = size;
+
+          ctx.save();
+          ctx.translate(size / 2, size / 2);
+          ctx.rotate(-25 * Math.PI / 180);
+          ctx.font = 'bold 22px Arial, sans-serif';
+          ctx.fillStyle = '#ff0000';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+
+          var spacing = 120;
+          for (var x = -size; x < size * 2; x += spacing) {
+            for (var y = -size; y < size * 2; y += spacing) {
+              ctx.fillText(text, x, y);
+            }
+          }
+          ctx.restore();
+
+          return canvas.toDataURL();
+        }
+
+        var wmText = wm.getAttribute('data-text') || 'CONFIDENTIAL COPY';
+        wm.style.backgroundImage = 'url(' + generateTile(wmText) + ')';
+        wm.style.backgroundRepeat = 'repeat';
+
+        var baselineDPR = window.devicePixelRatio || 1;
+
+        function checkZoom() {
+          var zoomed = false;
+
+          if (Math.abs(window.devicePixelRatio - baselineDPR) > 0.01) {
+            zoomed = true;
+          }
+
+          if (window.visualViewport && window.visualViewport.scale > 1.01) {
+            zoomed = true;
+          }
+
+          document.body.classList.toggle('zoomed', zoomed);
+        }
+
+        checkZoom();
+        window.addEventListener('resize', checkZoom);
+        if (window.visualViewport) {
+          window.visualViewport.addEventListener('resize', checkZoom);
+        }
+
+        var guard = new MutationObserver(function (mutations) {
+          var shouldReload = false;
+
+          for (var i = 0; i < mutations.length; i++) {
+            var mutation = mutations[i];
+
+            if (mutation.type === 'childList') {
+              for (var j = 0; j < mutation.removedNodes.length; j++) {
+                var removed = mutation.removedNodes[j];
+                if (removed === wm || (removed.querySelector && removed.querySelector('#watermark'))) {
+                  shouldReload = true;
+                  break;
+                }
+              }
+            }
+
+            if (mutation.type === 'attributes' && mutation.target === wm) {
+              var style = getComputedStyle(wm);
+              if (style.display === 'none' || style.visibility === 'hidden') {
+                shouldReload = true;
+                break;
+              }
+            }
+
+            if (shouldReload) break;
+          }
+
+          if (shouldReload) {
+            guard.disconnect();
+            location.reload();
+          }
+        });
+
+        guard.observe(document.body, {
+          childList: true,
+          subtree: true,
+          attributes: true,
+          attributeFilter: ['style', 'class']
+        });
+
+        guard.observe(wm, {
+          attributes: true,
+          attributeFilter: ['style', 'class']
+        });
+      })();
     })();
   </script>
 </body>

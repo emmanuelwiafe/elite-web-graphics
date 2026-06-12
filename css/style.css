@@ -1000,3 +1000,20 @@ ul {
     bottom: 5rem;
   }
 }
+
+/* ===== Zoom-Activated Watermark ===== */
+#watermark {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9995;
+  pointer-events: none;
+  background-repeat: repeat;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+body.zoomed #watermark {
+  opacity: 0.25;
+}
