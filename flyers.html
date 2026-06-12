@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flyers Portfolio - Elite Web & Graphics</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .flyers-header {
+      background: #222;
+      color: #fff;
+      text-align: center;
+      padding: 6rem 0 3rem;
+    }
+    .flyers-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .flyers-header p {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+    .flyers-section {
+      padding: 2rem 0 4rem;
+    }
+    .flyers-filter {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    .flyers-filter .filter-btn {
+      padding: 0.5rem 1.5rem;
+      border: 2px solid #007bff;
+      background: transparent;
+      color: #007bff;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      font-family: inherit;
+    }
+    .flyers-filter .filter-btn:hover,
+    .flyers-filter .filter-btn.active {
+      background: #007bff;
+      color: #fff;
+    }
+    .flyers-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1rem;
+    }
+    .flyers-grid .flyer-item {
+      position: relative;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, opacity 0.3s;
+      aspect-ratio: 3 / 4;
+    }
+    .flyers-grid .flyer-item:hover {
+      transform: translateY(-4px);
+    }
+    .flyers-grid .flyer-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .flyers-grid .flyer-item .flyer-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.75rem;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .flyers-grid .flyer-item.hidden {
+      display: none;
+    }
+
+    @media (max-width: 1024px) {
+      .flyers-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .flyers-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .flyers-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ── View Project Modal ── */
+    .view-modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .view-modal.open { display: flex; }
+
+    .view-modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 0.5rem;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+      transition: filter 0.3s;
+      line-height: 0;
+    }
+    .view-modal-content.blurred {
+      filter: blur(10px);
+    }
+
+    .view-modal-content canvas {
+      display: block;
+      max-width: 90vw;
+      max-height: 90vh;
+      width: auto;
+      height: auto;
+    }
+
+    .view-modal-close {
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      color: #fff;
+      font-size: 2.5rem;
+      font-weight: 700;
+      cursor: pointer;
+      z-index: 10001;
+      line-height: 1;
+      transition: opacity 0.3s;
+    }
+    .view-modal-close:hover { opacity: 0.7; }
+
+
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <nav class="navbar container">
+      <a href="index.html" class="logo">Elite<span>W&amp;G</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html#home" class="nav-link">Home</a></li>
+        <li><a href="index.html#about" class="nav-link">About</a></li>
+        <li><a href="index.html#services" class="nav-link">Services</a></li>
+        <li><a href="index.html#portfolio" class="nav-link">Portfolio</a></li>
+        <li><a href="index.html#testimonials" class="nav-link">Testimonials</a></li>
+        <li><a href="index.html#blog" class="nav-link">Blog</a></li>
+        <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="flyers-header">
+      <div class="container">
+        <h1>Our Flyer Designs</h1>
+        <p>Browse through our collection of professionally designed flyers</p>
+      </div>
+    </section>
+
+    <section class="flyers-section">
+      <div class="container">
+        <div class="flyers-filter">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="business">Business</button>
+          <button class="filter-btn" data-filter="election">Election</button>
+          <button class="filter-btn" data-filter="event">Event</button>
+          <button class="filter-btn" data-filter="birthday">Birthday</button>
+        </div>
+
+        <div class="flyers-grid" id="flyersGrid">
+          <!-- Business -->
+          <div class="flyer-item" data-category="business"><img src="img/business/Edifraken.jpg" alt="Edifraken" /><span class="flyer-label">Edifraken</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/Lizzie-Klothing.jpg" alt="Lizzie Klothing" /><span class="flyer-label">Lizzie Klothing</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/Mabel.jpg" alt="Mabel" /><span class="flyer-label">Mabel</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/MAYLOURA-FRAGRANCES.-Main.jpg" alt="Mayloura Fragrances" /><span class="flyer-label">Mayloura Fragrances</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/MENU.jpg" alt="Menu" /><span class="flyer-label">Menu</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/Niella.jpg" alt="Niella" /><span class="flyer-label">Niella</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/Obaasima.jpg" alt="Obaasima" /><span class="flyer-label">Obaasima</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/SALES.jpg" alt="Sales" /><span class="flyer-label">Sales</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/STEPH'S PARLOR.jpg" alt="Steph's Parlor" /><span class="flyer-label">Steph's Parlor</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/STEPH'S-Garments.jpg" alt="Steph's Garments" /><span class="flyer-label">Steph's Garments</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/Trade-Fair.png" alt="Trade Fair" /><span class="flyer-label">Trade Fair</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/WhatsApp%20Image%202026-05-07%20at%206.50.20%20PM%20(2).jpeg" alt="Business Flyer 1" /><span class="flyer-label">Business Flyer</span></div>
+          <div class="flyer-item" data-category="business"><img src="img/business/WhatsApp%20Image%202026-05-07%20at%206.50.20%20PM.jpeg" alt="Business Flyer 2" /><span class="flyer-label">Business Flyer</span></div>
+
+          <!-- Election -->
+          <div class="flyer-item" data-category="election"><img src="img/Election/%23TheOriginalMouthpiece.jpg" alt="The Original Mouthpiece" /><span class="flyer-label">The Original Mouthpiece</span></div>
+          <div class="flyer-item" data-category="election"><img src="img/Election/All-the-Best--PRO.jpg" alt="All the Best PRO" /><span class="flyer-label">All the Best PRO</span></div>
+          <div class="flyer-item" data-category="election"><img src="img/Election/All-the-Best--VICE.jpg" alt="All the Best VICE" /><span class="flyer-label">All the Best VICE</span></div>
+          <div class="flyer-item" data-category="election"><img src="img/Election/All-the-Best.jpg" alt="All the Best" /><span class="flyer-label">All the Best</span></div>
+          <div class="flyer-item" data-category="election"><img src="img/Election/DONKOR-ERIC.jpg" alt="Donkor Eric" /><span class="flyer-label">Donkor Eric</span></div>
+          <div class="flyer-item" data-category="election"><img src="img/Election/Hon.-John-Kobina-Abbam-Aboah-Sanie.jpg" alt="Hon. John Kobina Abbam Aboah Sanie" /><span class="flyer-label">Hon. John K. A. A. Sanie</span></div>
+          <div class="flyer-item" data-category="election"><img src="img/Election/NPP%20(2).jpg" alt="NPP" /><span class="flyer-label">NPP</span></div>
+          <div class="flyer-item" data-category="election"><img src="img/Election/Organization%20(2).jpg" alt="Organization" /><span class="flyer-label">Organization</span></div>
+          <div class="flyer-item" data-category="election"><img src="img/Election/Organization.jpg" alt="Organization" /><span class="flyer-label">Organization</span></div>
+          <div class="flyer-item" data-category="election"><img src="img/Election/REG.jpg" alt="REG" /><span class="flyer-label">REG</span></div>
+          <div class="flyer-item" data-category="election"><img src="img/Election/TOGETHER-WE-CAN.jpg" alt="Together We Can" /><span class="flyer-label">Together We Can</span></div>
+
+          <!-- Event -->
+          <div class="flyer-item" data-category="event"><img src="img/Event/BulkVote.jpg" alt="Bulk Vote" /><span class="flyer-label">Bulk Vote</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/CASTIN-CALL.jpg" alt="Castin Call" /><span class="flyer-label">Castin Call</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/Casting-2.jpg" alt="Casting" /><span class="flyer-label">Casting</span></div>
+          <div class="flyer-item" data-category="event birthday"><img src="img/Event/Chill-,-Paint.jpg" alt="Chill & Paint" /><span class="flyer-label">Chill &amp; Paint</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/EID-UL-ADHA.jpg" alt="Eid ul Adha" /><span class="flyer-label">Eid ul Adha</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/Eid-ul-Fitr.jpg" alt="Eid ul Fitr" /><span class="flyer-label">Eid ul Fitr</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/FASSA-DISCUSSION-FORUM.jpg" alt="FASSA Discussion Forum" /><span class="flyer-label">FASSA Discussion</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/FASSA-FORUM.jpg" alt="FASSA Forum" /><span class="flyer-label">FASSA Forum</span></div>
+          <div class="flyer-item" data-category="event birthday"><img src="img/Event/Flow-Forward-Initiative-1.jpg" alt="Flow Forward Initiative" /><span class="flyer-label">Flow Forward</span></div>
+          <div class="flyer-item" data-category="event birthday"><img src="img/Event/Flow.jpg" alt="Flow" /><span class="flyer-label">Flow</span></div>
+          <div class="flyer-item" data-category="event birthday"><img src="img/Event/GAMES.jpg" alt="Games" /><span class="flyer-label">Games</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/GSEA.jpg" alt="GSEA" /><span class="flyer-label">GSEA</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/GTAA.jpg" alt="GTAA" /><span class="flyer-label">GTAA</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/Independence-Day---FASSA.jpg" alt="Independence Day FASSA" /><span class="flyer-label">Independence Day</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/movie.jpg" alt="Movie" /><span class="flyer-label">Movie</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/RAMADAN%20(2).jpg" alt="Ramadan" /><span class="flyer-label">Ramadan</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/RAMADAN.jpg" alt="Ramadan" /><span class="flyer-label">Ramadan</span></div>
+          <div class="flyer-item" data-category="event birthday"><img src="img/Event/Rave%20(2).jpg" alt="Rave" /><span class="flyer-label">Rave</span></div>
+          <div class="flyer-item" data-category="event birthday"><img src="img/Event/SRC-FUN-TRIP.jpg" alt="SRC Fun Trip" /><span class="flyer-label">SRC Fun Trip</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/STAND%20IN%20WORSHIP.jpg" alt="Stand in Worship" /><span class="flyer-label">Stand in Worship</span></div>
+          <div class="flyer-item" data-category="event birthday"><img src="img/Event/TRIP.jpg" alt="Trip" /><span class="flyer-label">Trip</span></div>
+          <div class="flyer-item" data-category="event birthday"><img src="img/Event/ValsDay-Series-2-(2).jpg" alt="Valentine's Day" /><span class="flyer-label">Valentine's Day</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/ValsDay-Series-2-Call-for-Vendors.jpg" alt="Valentine's Vendors" /><span class="flyer-label">Valentine's Vendors</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/Welcome-Back.jpg" alt="Welcome Back" /><span class="flyer-label">Welcome Back</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/WhatsApp%20Image%202026-05-07%20at%206.50.19%20PM%20(1).jpeg" alt="Event Flyer 1" /><span class="flyer-label">Event Flyer</span></div>
+          <div class="flyer-item" data-category="event"><img src="img/Event/WhatsApp%20Image%202026-05-07%20at%206.50.20%20PM%20(1).jpeg" alt="Event Flyer 2" /><span class="flyer-label">Event Flyer</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.tiktok.com/@kobina_amponsah?_r=1&_t=ZS-977jYHzpL2i" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/1D8HNpVh4f/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://snapchat.com/t/FiNFOw7B" target="_blank" rel="noopener noreferrer" aria-label="Snapchat"><i class="fab fa-snapchat"></i></a>
+      </div>
+      <p>&copy; 2026 Elite Web &amp; Graphics. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <a href="https://wa.link/rnzuws" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- ── View Project Modal ── -->
+  <div class="view-modal" id="viewModal">
+    <span class="view-modal-close" id="viewModalClose">&times;</span>
+    <div class="view-modal-content" id="viewModalContent">
+      <canvas id="viewModalCanvas"></canvas>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      /* ── Hamburger menu ── */
+      var hamburger = document.getElementById('hamburger');
+      var navMenu = document.getElementById('nav-menu');
+      if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function () {
+          hamburger.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        });
+      }
+
+      /* ── Filtering ── */
+      var filterBtns = document.querySelectorAll('.flyers-filter .filter-btn');
+      var flyerItems = document.querySelectorAll('.flyer-item');
+
+      filterBtns.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          filterBtns.forEach(function (b) { b.classList.remove('active'); });
+          this.classList.add('active');
+
+          var filter = this.getAttribute('data-filter');
+
+          flyerItems.forEach(function (item) {
+            var cats = item.getAttribute('data-category').split(' ');
+            if (filter === 'all' || cats.indexOf(filter) !== -1) {
+              item.classList.remove('hidden');
+            } else {
+              item.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      /* ── View Project Modal (Canvas-based with baked-in protection) ── */
+      var modal = document.getElementById('viewModal');
+      var modalCanvas = document.getElementById('viewModalCanvas');
+      var modalContent = document.getElementById('viewModalContent');
+      var modalClose = document.getElementById('viewModalClose');
+      var modalCtx = modalCanvas.getContext('2d');
+
+      function openModal(src) {
+        var img = new Image();
+        img.onload = function () {
+          /* Determine display size */
+          var maxW = window.innerWidth * 0.85;
+          var maxH = window.innerHeight * 0.85;
+          var w = img.width;
+          var h = img.height;
+          var ratio = Math.min(maxW / w, maxH / h, 1);
+          w = Math.round(w * ratio);
+          h = Math.round(h * ratio);
+
+          modalCanvas.width = w;
+          modalCanvas.height = h;
+
+          /* ── Draw to display canvas ── */
+          modalCtx.drawImage(img, 0, 0, w, h);
+
+          /* ── Bold watermark overlay ── */
+          var marks = [
+            { text: 'CONFIDENTIAL', size: Math.round(w * 0.07), y: 0.10 },
+            { text: 'PREVIEW ONLY',  size: Math.round(w * 0.07), y: 0.26 },
+            { text: 'ELITE WEB & GRAPHICS', size: Math.round(w * 0.05), y: 0.42 },
+            { text: 'CONFIDENTIAL', size: Math.round(w * 0.07), y: 0.58 },
+            { text: 'PREVIEW ONLY',  size: Math.round(w * 0.07), y: 0.74 },
+            { text: 'ELITE WEB & GRAPHICS', size: Math.round(w * 0.05), y: 0.90 },
+          ];
+
+          modalCtx.textAlign = 'center';
+          modalCtx.textBaseline = 'middle';
+
+          marks.forEach(function (m) {
+            modalCtx.save();
+            modalCtx.translate(w / 2, Math.round(h * m.y));
+            modalCtx.rotate(-0.35);
+            modalCtx.font = 'bold ' + m.size + 'px Arial,sans-serif';
+            /* Shadow for legibility */
+            modalCtx.shadowColor = 'rgba(0,0,0,0.6)';
+            modalCtx.shadowBlur = 4;
+            modalCtx.fillStyle = 'rgba(255,50,50,0.55)';
+            modalCtx.fillText(m.text, 0, 0);
+            modalCtx.restore();
+          });
+
+          modal.classList.add('open');
+          document.body.style.overflow = 'hidden';
+        };
+        img.src = src;
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        modalContent.classList.remove('blurred');
+        modalCtx.clearRect(0, 0, modalCanvas.width, modalCanvas.height);
+        document.body.style.overflow = '';
+      }
+
+      /* Click any flyer to open modal */
+      flyerItems.forEach(function (item) {
+        item.addEventListener('click', function () {
+          var img = this.querySelector('img');
+          if (img) openModal(img.src);
+        });
+        /* Block drag on thumbnail images */
+        item.addEventListener('dragstart', function (e) { e.preventDefault(); });
+      });
+
+      /* Block drag on canvas to prevent save-as via drag */
+      modalCanvas.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+      modalClose.addEventListener('click', closeModal);
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+
+      /* ── Screenshot & Copy Protection ── */
+
+      /* Block right-click on flyer thumbnails and modal */
+      document.addEventListener('contextmenu', function (e) {
+        if (e.target.closest('.flyer-item') || modal.classList.contains('open')) {
+          e.preventDefault();
+        }
+      });
+
+      /* Block keyboard shortcuts that could capture/save */
+      document.addEventListener('keydown', function (e) {
+        if (!modal.classList.contains('open')) return;
+
+        /* PrintScreen */
+        if (e.key === 'PrintScreen') {
+          e.preventDefault();
+        }
+        /* Ctrl+P / Cmd+P */
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P')) {
+          e.preventDefault();
+        }
+        /* Cmd+Shift+4 (macOS region screenshot) */
+        if (e.metaKey && e.shiftKey && e.key === '4') {
+          e.preventDefault();
+        }
+        /* Cmd+Shift+3 (macOS fullscreen screenshot) */
+        if (e.metaKey && e.shiftKey && e.key === '3') {
+          e.preventDefault();
+        }
+        /* Ctrl+Shift+I / Cmd+Opt+I (dev tools) */
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'i' || e.key === 'I')) {
+          e.preventDefault();
+        }
+        /* Ctrl+U (view source) */
+        if ((e.ctrlKey || e.metaKey) && (e.key === 'u' || e.key === 'U')) {
+          e.preventDefault();
+        }
+        /* Ctrl+S / Cmd+S (save) */
+        if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+          e.preventDefault();
+        }
+        /* F12 (dev tools) */
+        if (e.key === 'F12') {
+          e.preventDefault();
+        }
+      });
+
+      /* ── Focus-loss / visibility safeguard ── */
+      document.addEventListener('visibilitychange', function () {
+        if (!modal.classList.contains('open')) return;
+        if (document.hidden) {
+          modalContent.classList.add('blurred');
+        } else {
+          modalContent.classList.remove('blurred');
+        }
+      });
+
+      window.addEventListener('blur', function () {
+        if (modal.classList.contains('open')) {
+          modalContent.classList.add('blurred');
+        }
+      });
+
+      window.addEventListener('focus', function () {
+        modalContent.classList.remove('blurred');
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -36,14 +36,14 @@
     siteName: extractText('title'),
     tagline: extractText('.hero-content h1'),
     heroDesc: extractText('.hero-content p'),
-    about: extractText('#about .section-desc'),
+    about: extractText('.about-text p'),
     services: extractAllText('.service-card h3').map(function (h, i) {
       var descs = extractAllText('.service-card p');
       return h + ': ' + (descs[i] || '');
     }),
     portfolioItems: extractAllText('.portfolio-item h3'),
-    testimonials: extractAllText('.testimonial p'),
-    testimonialAuthors: extractAllText('.testimonial cite'),
+    testimonials: extractAllText('.testimonial-text'),
+    testimonialAuthors: extractAllText('.testimonial-name'),
     blogPosts: extractAllText('.blog-card h3'),
     blogDescs: extractAllText('.blog-card p'),
     contactDesc: extractText('#contact .section-title'),
@@ -54,27 +54,31 @@
 
   var sections = [
     { name: 'home', keywords: ['home', 'hero', 'top', 'tagline', 'landing'], content: 'Hero section: "' + knowledge.tagline + '" — ' + knowledge.heroDesc },
-    { name: 'founder', keywords: ['founder', 'emmanuel', 'wiafe', 'who founded', 'who own', 'who run', 'who started', 'who created', 'who is behind', 'owner'], content: 'The founder of Elite Web &amp; Graphics is <strong>Emmanuel Wiafe</strong>. He is passionate about creating memorable brand experiences that help businesses stand out in today\'s digital world.' },
+    { name: 'founder', keywords: ['founder', 'emmanuel', 'wiafe', 'who founded', 'who own', 'who run', 'who started', 'who created', 'who made', 'who built', 'who developed', 'created this', 'built this', 'developed this', 'who is behind', 'owner'], content: 'The company was founded by <strong>Emmanuel Wiafe</strong>.' },
     { name: 'about', keywords: ['about', 'story', 'background', 'mission', 'company', 'agency'], content: knowledge.about },
-    { name: 'services overview', keywords: ['service', 'offer', 'do', 'provide', 'what do'], content: 'We offer: ' + knowledge.services.join('; ') + '.' },
+    { name: 'services', keywords: ['service', 'offer', 'provide', 'what do', 'what does', 'you offer', 'you provide'], content: 'We provide graphic design (logos, branding, social media graphics, print/flyers), web development (responsive sites, e-commerce, custom apps), and mobile app development (native and cross-platform).' },
     { name: 'graphic design', keywords: ['graphic', 'design', 'logo', 'brand', 'identity', 'paint', 'visual'], content: knowledge.services[0] || 'Graphic design services including logo design, branding, social media graphics, and print materials.' },
-    { name: 'web development', keywords: ['web', 'website', 'site', 'development', 'e-commerce', 'ecommerce', 'shop', 'online store'], content: knowledge.services[1] || 'Web development services including responsive websites, e-commerce platforms, and custom web applications.' },
+    { name: 'web development', keywords: ['web', 'website', 'development', 'e-commerce', 'ecommerce', 'shop', 'online store'], content: knowledge.services[1] || 'Web development services including responsive websites, e-commerce platforms, and custom web applications.' },
     { name: 'mobile app', keywords: ['mobile', 'app', 'application', 'android', 'ios', 'iphone', 'phone app', 'native', 'cross-platform'], content: knowledge.services[2] || 'Mobile app development: native and cross-platform applications built for performance, usability, and scale.' },
-    { name: 'portfolio', keywords: ['portfolio', 'project', 'work', 'past', 'previous', 'example', 'showcase', 'sample'], content: 'Our portfolio includes projects like: ' + knowledge.portfolioItems.join(', ') + '.' },
-    { name: 'testimonials', keywords: ['testimonial', 'review', 'client', 'say', 'feedback', 'recommend', 'rating'], content: 'Client testimonials: ' + knowledge.testimonials.map(function (t, i) { return '"' + t + '" — ' + (knowledge.testimonialAuthors[i] || ''); }).join(' ') },
+    { name: 'portfolio', keywords: ['portfolio', 'project', 'work', 'past', 'previous', 'example', 'showcase', 'sample', 'samples'], content: 'E-Commerce Site, Brand Refresh, SmartFace Register (a facial-recognition + GPS attendance system for schools/universities), and a flyers/graphic design gallery (business, event, election, birthday categories).' },
+    { name: 'testimonials', keywords: ['testimonial', 'review', 'client', 'say', 'feedback', 'recommend', 'rating', 'clients say'], content: 'Sarah Mensah (Bloom Cosmetics) — site doubled their traffic; James Osei (QuickCart) — praised the mobile app; Ama Serwaa (Luxe Beauty) — praised branding/identity work.' },
     { name: 'blog', keywords: ['blog', 'article', 'post', 'news', 'latest', 'trend', 'read'], content: 'Our latest blog posts: ' + knowledge.blogPosts.map(function (t, i) { return t + ' — ' + (knowledge.blogDescs[i] || ''); }).join(' | ') },
-    { name: 'contact', keywords: ['contact', 'reach', 'email', 'phone', 'call', 'message', 'form', 'get in touch', 'quote'], content: 'You can reach us through the contact form on this page. Fill in your name, email, select a service, and provide project details. We also have a WhatsApp chat button at the bottom-right corner.' },
-    { name: 'pricing', keywords: ['price', 'cost', 'pricing', 'how much', 'rate', 'fee', 'charge', 'budget', 'afford'], content: 'Pricing depends on your project scope. Please use the contact form or WhatsApp to tell us about your project, and we will provide a tailored quote.' },
-    { name: 'timeline', keywords: ['timeline', 'time', 'how long', 'duration', 'when', 'delivery', 'deadline', 'turnaround'], content: 'Timelines vary by project. A simple website may take 1-2 weeks, while a full mobile app can take 4-8 weeks. We will give you a clear timeline during our consultation.' },
+    { name: 'flyers', keywords: ['flyer', 'flyers', 'gallery', 'graphic design samples', 'design samples'], content: 'The "Flyers" portfolio item links to flyers.html, a filterable gallery (Business, Event, Election, Birthday categories) with dozens of real client flyers.' },
+    { name: 'contact', keywords: ['contact', 'reach', 'email', 'phone', 'call', 'message', 'form', 'get in touch', 'quote'], content: 'Use the on-site contact form (name, email, service type, project details), the floating WhatsApp button, or social media (TikTok, Facebook, Snapchat, Instagram, LinkedIn).' },
+    { name: 'pricing', keywords: ['price', 'cost', 'pricing', 'how much', 'rate', 'fee', 'charge', 'budget', 'afford'], content: 'Pricing is quote-based and depends on project scope — contact via form or WhatsApp for a tailored quote.' },
+    { name: 'timeline', keywords: ['timeline', 'time', 'how long', 'how long does', 'how long will', 'duration', 'when', 'delivery', 'deadline', 'turnaround', 'take', 'weeks', 'months'], content: 'Simple websites: 1–2 weeks. Full mobile apps: 4–8 weeks. Exact timeline given after consultation.' },
     { name: 'navigation', keywords: ['navigate', 'menu', 'section', 'page', 'link', 'nav'], content: 'This is a single-page site. Use the navigation bar at the top to jump to sections: ' + knowledge.navLinks.join(', ') + '.' },
     { name: 'footer', keywords: ['footer', 'bottom', 'copyright', 'rights'], content: knowledge.footer },
+    { name: 'experience', keywords: ['experience', 'how experienced', 'team', 'background', 'years'], content: 'The team has <strong>5+ years of experience</strong>, with <strong>50+ projects completed</strong> and <strong>30+ clients</strong> worked with.' },
+    { name: 'technologies', keywords: ['technology', 'technologies', 'tech', 'tech stack', 'stack', 'tools', 'programming', 'language', 'framework', 'photoshop'], content: 'Frontend — HTML5, CSS3, JavaScript, React, Angular, Vue.js. Backend — Node.js, Python, PHP, Java, databases, APIs. DevOps/tools — Docker, Git, Linux, AWS, GitHub, CLI. Design — Photoshop (80% proficiency).' },
+    { name: 'chatbot', keywords: ['chatbot', 'ai assistant', 'ai', 'assistant', 'bot', 'already'], content: 'Yes — a simple keyword-based JS assistant (bottom-right "AI Assistant" button) that answers questions about services, portfolio, testimonials, pricing, and contact by matching keywords to predefined content.' },
   ];
 
   var greetings = [
-    { keywords: ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'howdy'], reply: 'Hello! Welcome to ' + knowledge.siteName + '. I\'m your AI assistant. Ask me anything about our services, portfolio, or anything on this site!' },
+    { keywords: ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'howdy'], reply: 'Hello! Welcome to ' + knowledge.siteName + '. I\'m your AI assistant. Ask me about services, portfolio, pricing, timelines, or anything on this site!' },
     { keywords: ['thank', 'thanks', 'appreciate', 'grateful'], reply: 'You\'re welcome! 😊 Feel free to ask anything else. I\'m here to help!' },
     { keywords: ['bye', 'goodbye', 'see you', 'later', 'farewell'], reply: 'Goodbye! Thanks for visiting ' + knowledge.siteName + '. Come back anytime!' },
-    { keywords: ['help', 'what can you', 'what do you'], reply: 'I can answer questions about anything on this website — our services, portfolio, testimonials, blog posts, pricing, contact info, and more. Just ask!' },
+    { keywords: ['help', 'what can you', 'what do you'], reply: 'I can answer questions about what we do, who founded us, our experience, technologies, portfolio, pricing, timelines, client testimonials, flyer samples, contact info, and more. Just ask!' },
   ];
 
   function getBestSection(msg) {
@@ -102,7 +106,9 @@
 
     for (var g = 0; g < greetings.length; g++) {
       for (var kg = 0; kg < greetings[g].keywords.length; kg++) {
-        if (lower.includes(greetings[g].keywords[kg])) {
+        var word = greetings[g].keywords[kg];
+        var regex = new RegExp('\\b' + word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+        if (regex.test(lower)) {
           return greetings[g].reply;
         }
       }
@@ -110,18 +116,14 @@
 
     var section = getBestSection(msg);
     if (section) {
-      var reply = 'Here\'s what I found about <strong>' + section.name + '</strong>:<br>' + section.content;
-      if (section.name === 'contact') {
-        reply += '<br><br>💬 Or tap the green WhatsApp button to chat with us directly!';
-      }
-      return reply;
+      return section.content;
     }
 
     if (lower.includes('what') || lower.includes('tell') || lower.includes('about')) {
-      return 'I can tell you about: <strong>' + sections.map(function (s) { return s.name; }).join('</strong>, <strong>') + '</strong>. Just ask!';
+      return 'I can tell you about our services, founder, experience, technologies, portfolio, pricing, timelines, client testimonials, flyer samples, contact info, and more. Just ask!';
     }
 
-    return 'I\'m not sure I understand. Try asking about: <strong>' + sections.map(function (s) { return s.name; }).join('</strong>, <strong>') + '</strong>.';
+    return 'I\'m not sure I understand. Try asking about our services, founder, experience, technologies, portfolio, pricing, timelines, client testimonials, flyer samples, or contact info.';
   }
 
   function addMessage(text, type) {
