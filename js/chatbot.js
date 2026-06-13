@@ -78,7 +78,7 @@
     { keywords: ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'howdy'], reply: 'Hello! Welcome to ' + knowledge.siteName + '. I\'m your AI assistant. Ask me about services, portfolio, pricing, timelines, or anything on this site!' },
     { keywords: ['thank', 'thanks', 'appreciate', 'grateful'], reply: 'You\'re welcome! 😊 Feel free to ask anything else. I\'m here to help!' },
     { keywords: ['bye', 'goodbye', 'see you', 'later', 'farewell'], reply: 'Goodbye! Thanks for visiting ' + knowledge.siteName + '. Come back anytime!' },
-    { keywords: ['help', 'what can you', 'what do you'], reply: 'I can answer questions about what we do, who founded us, our experience, technologies, portfolio, pricing, timelines, client testimonials, flyer samples, contact info, and more. Just ask!' },
+    { keywords: ['ok', 'okay'], reply: 'Sure.' },
   ];
 
   function getBestSection(msg) {
@@ -163,4 +163,62 @@
       handleSend();
     }
   });
+
+  /* ── Web Speech API (Voice Input) ── */
+  var micBtn = document.getElementById('chatbot-mic');
+  var recognition = null;
+  var isListening = false;
+
+  var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (micBtn && SpeechRecognition) {
+    recognition = new SpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.interimResults = false;
+    recognition.continuous = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onresult = function (e) {
+      var transcript = e.results[0][0].transcript;
+      input.value = '';
+      addMessage(escapeHtml(transcript), 'user');
+      sendBtn.disabled = true;
+      setTimeout(function () {
+        var reply = getReply(transcript);
+        addMessage(reply, 'bot');
+        sendBtn.disabled = false;
+      }, 400);
+      stopListening();
+    };
+
+    recognition.onerror = function () {
+      stopListening();
+    };
+
+    recognition.onend = function () {
+      stopListening();
+    };
+
+    function startListening() {
+      if (isListening) return;
+      isListening = true;
+      micBtn.classList.add('listening');
+      micBtn.innerHTML = '<i class="fas fa-circle"></i>';
+      try { recognition.start(); } catch (e) { stopListening(); }
+    }
+
+    function stopListening() {
+      isListening = false;
+      micBtn.classList.remove('listening');
+      micBtn.innerHTML = '<i class="fas fa-microphone"></i>';
+      try { recognition.stop(); } catch (e) {}
+    }
+
+    micBtn.addEventListener('click', function () {
+      if (isListening) { stopListening(); return; }
+      startListening();
+    });
+  } else if (micBtn) {
+    micBtn.style.display = 'none';
+  }
 })();

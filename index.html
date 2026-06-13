@@ -60,7 +60,16 @@
         <h2 class="section-title">About Me</h2>
         <div class="about-content">
           <div class="about-image">
-            <img src="img/1.jpg" alt="Emmanuel Wiafe - Founder" />
+            <div class="flip-card">
+              <div class="flip-inner">
+                <div class="flip-front">
+                  <img src="img/1.jpg" alt="Emmanuel Wiafe - Founder" />
+                </div>
+                <div class="flip-back">
+                  <img src="img/3727.jpg" alt="Emmanuel Wiafe" />
+                </div>
+              </div>
+            </div>
           </div>
           <div class="about-text">
             <p>Hello, I'm Emmanuel Wiafe, founder of Elite Web &amp; Graphics. I am passionate about creating memorable brand experiences that help businesses stand out in today's digital world. From logo design and branding to web development and scalable digital platforms, I combine creativity and technology to bring ideas to life. My goal is to deliver innovative, high-quality solutions that empower brands to grow and succeed online.</p>
@@ -322,6 +331,11 @@
         <a href="https://www.facebook.com/share/1D8HNpVh4f/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
         <a href="https://snapchat.com/t/FiNFOw7B" target="_blank" rel="noopener noreferrer" aria-label="Snapchat"><i class="fab fa-snapchat"></i></a>
       </div>
+      <div class="footer-contact">
+        <a href="mailto:emmanuelwiafe09@gmail.com"><i class="fas fa-envelope"></i> emmanuelwiafe09@gmail.com</a>
+        <a href="tel:+233559114156"><i class="fas fa-phone"></i> +233 (0) 559114156</a>
+        <span><i class="fas fa-map-marker-alt"></i> Takoradi</span>
+      </div>
       <p>&copy; 2026 Elite Web &amp; Graphics. All rights reserved.</p>
     </div>
   </footer>
@@ -343,10 +357,16 @@
         <div class="chatbot-msg bot">Hi there! 👋 I'm the Elite Web &amp; Graphics AI assistant. Ask me about our services, portfolio, pricing, or anything else!</div>
       </div>
       <div class="chatbot-footer">
-        <input type="text" id="chatbot-input" placeholder="Type a message..." />
+        <input type="text" id="chatbot-input" placeholder="Type or tap the mic..." />
+        <button id="chatbot-mic" aria-label="Voice input"><i class="fas fa-microphone"></i></button>
         <button id="chatbot-send" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
       </div>
     </div>
+  </div>
+
+  <div id="bottomWalker">
+    <div class="walker-bubble">👋 Hey there!</div>
+    <div class="walker-char">🧑‍💻</div>
   </div>
 
   <script src="js/main.js"></script>

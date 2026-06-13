@@ -277,4 +277,65 @@
       showQuote();
     });
   })();
+
+  /* ── Walking Character ── */
+  (function () {
+    var walker = document.getElementById('bottomWalker');
+    var bubble = document.querySelector('#bottomWalker .walker-bubble');
+    if (!walker || !bubble) return;
+
+    var sectionEls = document.querySelectorAll('#home, #about, #services, #skills, #portfolio, #testimonials, #blog, #contact');
+
+    var messages = {
+      home: '👋 Hey there! Welcome!',
+      about: 'That\'s me — Emmanuel Wiafe!',
+      skills: 'Ooh, look at all these React projects!',
+      services: 'We build awesome digital products!',
+      portfolio: 'Check out my latest work!',
+      testimonials: 'Happy clients all around!',
+      blog: 'Fresh content, go read it!',
+      contact: 'Let\'s work together!',
+    };
+
+    var lastSection = '';
+    var sections = [];
+
+    function updateSections() {
+      sections = [];
+      sectionEls.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        sections.push({ id: el.id, left: r.left, right: r.right, top: r.top, bottom: r.bottom });
+      });
+    }
+
+    function getX(el) {
+      var m = getComputedStyle(el).transform;
+      var match = m.match(/matrix\([^,]+,[^,]+,[^,]+,[^,]+,\s*([^,]+)/);
+      return match ? parseFloat(match[1]) : 0;
+    }
+
+    function tick() {
+      updateSections();
+      var x = getX(walker);
+      var vh = window.innerHeight;
+      var current = 'home';
+
+      for (var i = 0; i < sections.length; i++) {
+        var s = sections[i];
+        if (x >= s.left && x <= s.right && s.top < vh - 20 && s.bottom > vh - 80) {
+          current = s.id;
+          break;
+        }
+      }
+
+      if (current !== lastSection) {
+        bubble.textContent = messages[current] || 'Hello!';
+        lastSection = current;
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    tick();
+  })();
 })();
