@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brand Refresh - Elite Web & Graphics</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .project-header {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: #fff;
+      text-align: center;
+      padding: 7rem 0 3rem;
+    }
+    .project-header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .project-header p {
+      color: #aaa;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .project-badge {
+      display: inline-block;
+      background: #007bff;
+      color: #fff;
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .project-section {
+      padding: 4rem 0;
+    }
+    .project-section.alt {
+      background: #f9f9f9;
+    }
+    .project-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .project-gallery .gallery-card {
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      transition: transform 0.3s;
+      cursor: pointer;
+      background: #fff;
+    }
+    .project-gallery .gallery-card:hover {
+      transform: translateY(-4px);
+    }
+    .project-gallery .gallery-card img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+    }
+    .project-gallery .gallery-card .gallery-label {
+      padding: 0.6rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #007bff;
+      background: #e6f0ff;
+    }
+    .project-desc h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #222;
+    }
+    .project-desc h3 {
+      font-size: 1.2rem;
+      margin: 1.5rem 0 0.5rem;
+      color: #007bff;
+    }
+    .project-desc p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+    .project-desc ul {
+      padding-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .project-desc ul li {
+      margin-bottom: 0.5rem;
+      color: #555;
+      line-height: 1.6;
+    }
+    .project-desc ul li strong {
+      color: #222;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.3s;
+    }
+    .back-link:hover {
+      opacity: 0.7;
+    }
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .lightbox.open {
+      display: flex;
+    }
+    .lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      border-radius: 0.5rem;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+      object-fit: contain;
+    }
+    .lightbox-close {
+      position: fixed;
+      top: 1rem;
+      right: 1.5rem;
+      color: #fff;
+      font-size: 2.5rem;
+      font-weight: 700;
+      cursor: pointer;
+      z-index: 10000;
+      line-height: 1;
+      transition: opacity 0.3s;
+    }
+    .lightbox-close:hover {
+      opacity: 0.7;
+    }
+    @media (max-width: 768px) {
+      .project-gallery {
+        grid-template-columns: 1fr;
+      }
+      .project-gallery img {
+        height: auto;
+      }
+      .project-header h1 {
+        font-size: 1.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <nav class="navbar container">
+      <a href="index.html" class="logo">Elite<span>W&amp;G</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html#home" class="nav-link">Home</a></li>
+        <li><a href="index.html#about" class="nav-link">About</a></li>
+        <li><a href="index.html#services" class="nav-link">Services</a></li>
+        <li><a href="index.html#portfolio" class="nav-link">Portfolio</a></li>
+        <li><a href="index.html#testimonials" class="nav-link">Testimonials</a></li>
+        <li><a href="index.html#blog" class="nav-link">Blog</a></li>
+        <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="project-header">
+      <div class="container">
+        <span class="project-badge">Graphic Design</span>
+        <h1>Brand Refresh</h1>
+        <p>Complete visual identity overhaul including logo, color palette, and brand guidelines</p>
+      </div>
+    </section>
+
+    <section class="project-section">
+      <div class="container">
+        <div class="project-gallery">
+          <div class="gallery-card">
+            <img src="img/logodesign.jpg" alt="Brand Refresh Logo" />
+            <div class="gallery-label">Logo Design</div>
+          </div>
+          <div class="gallery-card">
+            <img src="img/colorpalette.jpg" alt="Color Palette" />
+            <div class="gallery-label">Color Palette</div>
+          </div>
+          <div class="gallery-card">
+            <img src="img/brand.jpg" alt="Brand Guidelines" />
+            <div class="gallery-label">Brand Guidelines</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="project-section alt">
+      <div class="container">
+        <div class="project-desc">
+          <h2>About This Project</h2>
+          <p>
+            This brand refresh project involved a complete visual identity overhaul for a client seeking
+            to modernize their brand and stand out in a competitive market. Every element was redesigned
+            from the ground up to create a cohesive, memorable, and professional brand identity.
+          </p>
+          <p>
+            The goal was to move away from outdated visuals and establish a fresh, contemporary look
+            that resonates with the target audience while maintaining the core values and mission of
+            the business.
+          </p>
+
+          <h3>What We Delivered</h3>
+          <ul>
+            <li><strong>Logo Design</strong> — A versatile primary logo, secondary mark, and icon that work across all media.</li>
+            <li><strong>Color Palette</strong> — A carefully curated set of primary and secondary colors that evoke the right emotions and ensure consistency.</li>
+            <li><strong>Typography</strong> — Selected font pairings that balance readability with personality across print and digital.</li>
+            <li><strong>Brand Guidelines</strong> — A comprehensive document covering logo usage, color codes, typography, imagery style, and application examples.</li>
+            <li><strong>Stationery Suite</strong> — Business cards, letterheads, and email signatures aligned with the new identity.</li>
+            <li><strong>Social Media Kit</strong> — Profile pictures, cover images, and template designs for all major platforms.</li>
+          </ul>
+
+          <h3>Design Approach</h3>
+          <p>
+            The design process began with in-depth research into the client's industry, competitors, and
+            target audience. Mood boards and concept sketches were presented, refined through feedback
+            rounds, and delivered as a polished, cohesive brand system. Every color, shape, and font
+            was chosen with intention to communicate the brand's unique personality and values.
+          </p>
+
+          <h3>Project Impact</h3>
+          <p>
+            The refreshed brand identity helped the client achieve a more professional and trustworthy
+            presence across all touchpoints. Customer recognition improved, and the client reported
+            increased engagement on social media and higher conversion rates on marketing materials.
+          </p>
+
+          <a href="index.html#portfolio" class="back-link"><i class="fas fa-arrow-left"></i> Back to Portfolio</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.tiktok.com/@kobina_amponsah?_r=1&_t=ZS-977jYHzpL2i" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/1D8HNpVh4f/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://snapchat.com/t/FiNFOw7B" target="_blank" rel="noopener noreferrer" aria-label="Snapchat"><i class="fab fa-snapchat"></i></a>
+      </div>
+      <div class="footer-contact">
+        <a href="mailto:emmanuelwiafe09@gmail.com"><i class="fas fa-envelope"></i> emmanuelwiafe09@gmail.com</a>
+        <a href="tel:+233559114156"><i class="fas fa-phone"></i> +233 (0) 559114156</a>
+        <span><i class="fas fa-map-marker-alt"></i> Takoradi</span>
+      </div>
+      <p>&copy; 2026 Elite Web &amp; Graphics. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <a href="https://wa.link/rnzuws" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <div class="lightbox" id="lightbox">
+    <span class="lightbox-close" id="lightboxClose">&times;</span>
+    <img id="lightboxImg" src="" alt="Enlarged view" />
+  </div>
+
+  <div class="chatbot" id="chatbot">
+    <button class="chatbot-toggle" id="chatbot-toggle" aria-label="Open chat">
+      <i class="fas fa-comment-dots"></i>
+    </button>
+    <div class="chatbot-panel" id="chatbot-panel">
+      <div class="chatbot-header">
+        <span><i class="fas fa-robot"></i> AI Assistant</span>
+        <button id="chatbot-close" aria-label="Close chat">&times;</button>
+      </div>
+      <div class="chatbot-body" id="chatbot-body">
+        <div class="chatbot-msg bot">Hi there! 👋 I'm the Elite Web &amp; Graphics AI assistant. Ask me about our services, portfolio, pricing, or anything else!</div>
+      </div>
+      <div class="chatbot-footer">
+        <input type="text" id="chatbot-input" placeholder="Type or tap the mic..." />
+        <button id="chatbot-mic" aria-label="Voice input"><i class="fas fa-microphone"></i></button>
+        <button id="chatbot-send" aria-label="Send message"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/chatbot.js?v=5"></script>
+  <script>
+    (function () {
+      var hamburger = document.getElementById('hamburger');
+      var navMenu = document.getElementById('nav-menu');
+      if (hamburger && navMenu) {
+        hamburger.addEventListener('click', function () {
+          hamburger.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        });
+      }
+
+      var lightbox = document.getElementById('lightbox');
+      var lightboxImg = document.getElementById('lightboxImg');
+      var lightboxClose = document.getElementById('lightboxClose');
+
+      document.querySelectorAll('.gallery-card').forEach(function (card) {
+        card.addEventListener('click', function () {
+          var img = this.querySelector('img');
+          if (img) {
+            lightboxImg.src = img.src;
+            lightbox.classList.add('open');
+            document.body.style.overflow = 'hidden';
+          }
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      lightboxClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+      });
+    })();
+  </script>
+</body>
+</html>
