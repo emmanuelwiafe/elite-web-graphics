@@ -54,6 +54,7 @@
 
   var sections = [
     { name: 'home', keywords: ['home', 'hero', 'top', 'tagline', 'landing'], content: 'Hero section: "' + knowledge.tagline + '" — ' + knowledge.heroDesc },
+    { name: 'about this site', keywords: ['this website', 'your website', 'about this site', 'about this website', 'tell me about this', 'know about this', 'what is this', 'what is this site', 'what is this website', 'this site about', 'this site'], content: '<strong>' + knowledge.siteName + '</strong> is a graphic design and web development agency. ' + (knowledge.tagline ? '"' + knowledge.tagline + '"' : '') + ' ' + knowledge.heroDesc + '<br><br>We offer: <strong>Graphic Design</strong> (logos, branding, social media graphics, flyers), <strong>Web Development</strong> (responsive sites, e-commerce, custom apps), and <strong>Web App Development</strong>. Founded by <strong>Emmanuel Wiafe</strong>.' },
     { name: 'founder', keywords: ['founder', 'emmanuel', 'wiafe', 'who founded', 'who own', 'who run', 'who started', 'who created', 'who made', 'who built', 'who developed', 'created this', 'built this', 'developed this', 'who is behind', 'owner'], content: 'The company was founded by <strong>Emmanuel Wiafe</strong>.' },
     { name: 'about', keywords: ['about', 'story', 'background', 'mission', 'company', 'agency'], content: knowledge.about },
     { name: 'services', keywords: ['service', 'offer', 'provide', 'what do', 'what does', 'you offer', 'you provide'], content: 'We provide graphic design (logos, branding, social media graphics, print/flyers), web development (responsive sites, e-commerce, custom apps), and web app development (modern and responsive).' },
@@ -77,6 +78,7 @@
   var greetings = [
     { keywords: ['hi', 'hello', 'hey', 'good morning', 'good afternoon', 'good evening', 'howdy'], reply: 'Hello! Welcome to ' + knowledge.siteName + '. I\'m your AI assistant. Ask me about services, portfolio, pricing, timelines, or anything on this site!' },
     { keywords: ['thank', 'thanks', 'appreciate', 'grateful'], reply: 'You\'re welcome! 😊 Feel free to ask anything else. I\'m here to help!' },
+    { keywords: ['how are you', 'how do you do', 'how are you doing', 'how you doing', "how's it going", 'how is it going', 'you doing', 'how do you feel', 'how are things', "what's up"], reply: 'I\'m doing well, thanks for asking! How can I help you today?' },
     { keywords: ['bye', 'goodbye', 'see you', 'later', 'farewell'], reply: 'Goodbye! Thanks for visiting ' + knowledge.siteName + '. Come back anytime!' },
     { keywords: ['ok', 'okay'], reply: 'Sure.' },
   ];
