@@ -788,6 +788,18 @@ ul {
     display: flex;
   }
 
+  .navbar {
+    height: 4rem;
+  }
+
+  .logo img {
+    height: 3.2rem;
+  }
+
+  .logo-text {
+    font-size: 1rem;
+  }
+
   .nav-menu {
     position: fixed;
     top: 4rem;
