@@ -204,19 +204,8 @@ ul {
 }
 
 .logo img {
-  height: 5rem;
+  height: 4rem;
   width: auto;
-}
-
-.logo-text {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #222;
-  line-height: 1;
-}
-
-.logo-highlight {
-  color: #007bff;
 }
 
 .nav-menu {
@@ -793,11 +782,7 @@ ul {
   }
 
   .logo img {
-    height: 3.2rem;
-  }
-
-  .logo-text {
-    font-size: 1rem;
+    height: 2.8rem;
   }
 
   .nav-menu {
