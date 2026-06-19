@@ -51,7 +51,7 @@
       <div class="container hero-content">
         <h1>Design. Code. Launch.</h1>
         <p>We build stunning brands, powerful websites, and intuitive Web Apps that grow your business.</p>
-        <a href="#contact" class="btn btn-primary" id="quoteBtn">Get a Free Quote</a>
+        <a href="#contact" class="btn btn-primary" id="quoteBtn">Motivate Yourself</a>
       </div>
     </section>
 
@@ -291,28 +291,32 @@
         <h2 class="section-title">Get In Touch</h2>
         <form id="contact-form" class="contact-form" novalidate>
           <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required placeholder="Your Name" />
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required placeholder="Your Full Name" />
             <span class="error-msg" id="name-error"></span>
           </div>
           <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="your@email.com" />
-            <span class="error-msg" id="email-error"></span>
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" required placeholder="City, Country" />
+            <span class="error-msg" id="location-error"></span>
           </div>
           <div class="form-group">
-            <label for="service">Service Needed</label>
-            <select id="service" name="service" required>
+            <label for="phone">Mobile Number</label>
+            <input type="tel" id="phone" name="phone" required placeholder="+233 55 000 0000" />
+            <span class="error-msg" id="phone-error"></span>
+          </div>
+          <div class="form-group">
+            <label for="subject">Our Services</label>
+            <select id="subject" name="subject" required>
               <option value="">Select a service</option>
-              <option value="graphic-design">Graphic Design</option>
-              <option value="web-development">Web Development</option>
-              <option value="mobile-app">Mobile App Development</option>
-              <option value="other">Other</option>
+              <option value="Graphic Design">Graphic Design</option>
+              <option value="Web Development">Web Development</option>
+              <option value="Web Apps">Web Apps</option>
             </select>
-            <span class="error-msg" id="service-error"></span>
+            <span class="error-msg" id="subject-error"></span>
           </div>
           <div class="form-group">
-            <label for="message">Project Details</label>
+            <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" required placeholder="Tell us about your project..."></textarea>
             <span class="error-msg" id="message-error"></span>
           </div>

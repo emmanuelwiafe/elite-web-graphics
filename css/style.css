@@ -206,6 +206,8 @@ ul {
 .logo img {
   height: 6rem;
   width: auto;
+  transform: scale(1.2);
+  transform-origin: left center;
 }
 
 .nav-menu {
@@ -783,6 +785,8 @@ ul {
 
   .logo img {
     height: 4rem;
+    transform: scale(1.15);
+    transform-origin: left center;
   }
 
   .nav-menu {

@@ -25,19 +25,21 @@
 
   const form = document.getElementById('contact-form');
   const nameInput = document.getElementById('name');
-  const emailInput = document.getElementById('email');
-  const serviceInput = document.getElementById('service');
+  const locationInput = document.getElementById('location');
+  const phoneInput = document.getElementById('phone');
+  const subjectInput = document.getElementById('subject');
   const messageInput = document.getElementById('message');
 
   const nameError = document.getElementById('name-error');
-  const emailError = document.getElementById('email-error');
-  const serviceError = document.getElementById('service-error');
+  const locationError = document.getElementById('location-error');
+  const phoneError = document.getElementById('phone-error');
+  const subjectError = document.getElementById('subject-error');
   const messageError = document.getElementById('message-error');
 
   function validateName() {
     const value = nameInput.value.trim();
     if (!value) {
-      nameError.textContent = 'Name is required.';
+      nameError.textContent = 'Full name is required.';
       nameInput.closest('.form-group').classList.add('error');
       return false;
     }
@@ -51,40 +53,57 @@
     return true;
   }
 
-  function validateEmail() {
-    const value = emailInput.value.trim();
+  function validateLocation() {
+    const value = locationInput.value.trim();
     if (!value) {
-      emailError.textContent = 'Email is required.';
-      emailInput.closest('.form-group').classList.add('error');
+      locationError.textContent = 'Location is required.';
+      locationInput.closest('.form-group').classList.add('error');
       return false;
     }
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(value)) {
-      emailError.textContent = 'Please enter a valid email address.';
-      emailInput.closest('.form-group').classList.add('error');
+    if (value.length < 2) {
+      locationError.textContent = 'Please enter a valid location.';
+      locationInput.closest('.form-group').classList.add('error');
       return false;
     }
-    emailError.textContent = '';
-    emailInput.closest('.form-group').classList.remove('error');
+    locationError.textContent = '';
+    locationInput.closest('.form-group').classList.remove('error');
     return true;
   }
 
-  function validateService() {
-    const value = serviceInput.value;
+  function validatePhone() {
+    const value = phoneInput.value.trim();
     if (!value) {
-      serviceError.textContent = 'Please select a service.';
-      serviceInput.closest('.form-group').classList.add('error');
+      phoneError.textContent = 'Mobile number is required.';
+      phoneInput.closest('.form-group').classList.add('error');
       return false;
     }
-    serviceError.textContent = '';
-    serviceInput.closest('.form-group').classList.remove('error');
+    const phonePattern = /^\+?[\d\s\-()]{7,20}$/;
+    if (!phonePattern.test(value)) {
+      phoneError.textContent = 'Please enter a valid phone number.';
+      phoneInput.closest('.form-group').classList.add('error');
+      return false;
+    }
+    phoneError.textContent = '';
+    phoneInput.closest('.form-group').classList.remove('error');
+    return true;
+  }
+
+  function validateSubject() {
+    const value = subjectInput.value;
+    if (!value) {
+      subjectError.textContent = 'Please select a service.';
+      subjectInput.closest('.form-group').classList.add('error');
+      return false;
+    }
+    subjectError.textContent = '';
+    subjectInput.closest('.form-group').classList.remove('error');
     return true;
   }
 
   function validateMessage() {
     const value = messageInput.value.trim();
     if (!value) {
-      messageError.textContent = 'Project details are required.';
+      messageError.textContent = 'Message is required.';
       messageInput.closest('.form-group').classList.add('error');
       return false;
     }
@@ -99,27 +118,32 @@
   }
 
   nameInput.addEventListener('blur', validateName);
-  emailInput.addEventListener('blur', validateEmail);
-  serviceInput.addEventListener('change', validateService);
+  locationInput.addEventListener('blur', validateLocation);
+  phoneInput.addEventListener('blur', validatePhone);
+  subjectInput.addEventListener('change', validateSubject);
   messageInput.addEventListener('blur', validateMessage);
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
 
     const isNameValid = validateName();
-    const isEmailValid = validateEmail();
-    const isServiceValid = validateService();
+    const isLocationValid = validateLocation();
+    const isPhoneValid = validatePhone();
+    const isSubjectValid = validateSubject();
     const isMessageValid = validateMessage();
 
-    if (isNameValid && isEmailValid && isServiceValid && isMessageValid) {
+    if (isNameValid && isLocationValid && isPhoneValid && isSubjectValid && isMessageValid) {
       var btn = form.querySelector('button[type="submit"]');
       btn.disabled = true;
       btn.textContent = 'Sending...';
 
       var params = {
         name: nameInput.value.trim(),
-        email: emailInput.value.trim(),
-        service: serviceInput.value,
+        location: locationInput.value.trim(),
+        phone: phoneInput.value.trim(),
+        email: phoneInput.value.trim(),
+        subject: subjectInput.value.trim(),
+        service: subjectInput.value,
         message: messageInput.value.trim(),
       };
 
@@ -136,7 +160,27 @@
         })
         .catch(function (err) {
           console.error('EmailJS error:', err);
-          alert('Failed to send message. Please try again later.');
+          var xhr = new XMLHttpRequest();
+          xhr.open('POST', 'send-mail.php', true);
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+          xhr.onload = function () {
+            if (xhr.status === 200) {
+              alert('Thank you! Your message has been sent. We will get back to you shortly.');
+              form.reset();
+              document.querySelectorAll('.form-group').forEach(function (group) {
+                group.classList.remove('error');
+              });
+              document.querySelectorAll('.error-msg').forEach(function (msg) {
+                msg.textContent = '';
+              });
+            } else {
+              alert('Failed to send message. Please try again later.');
+            }
+          };
+          xhr.onerror = function () {
+            alert('Failed to send message. Please try again later.');
+          };
+          xhr.send('name=' + encodeURIComponent(params.name) + '&location=' + encodeURIComponent(params.location) + '&phone=' + encodeURIComponent(params.phone) + '&subject=' + encodeURIComponent(params.subject) + '&message=' + encodeURIComponent(params.message));
         })
         .finally(function () {
           btn.disabled = false;

@@ -7,20 +7,24 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
   exit;
 }
 
-$name    = trim($_POST['name'] ?? '');
-$email   = trim($_POST['email'] ?? '');
-$service = trim($_POST['service'] ?? '');
-$message = trim($_POST['message'] ?? '');
+$name     = trim($_POST['name'] ?? '');
+$location = trim($_POST['location'] ?? '');
+$phone    = trim($_POST['phone'] ?? '');
+$subject  = trim($_POST['subject'] ?? '');
+$message  = trim($_POST['message'] ?? '');
 
 $errors = [];
 if ($name === '') {
-  $errors[] = 'Name is required.';
+  $errors[] = 'Full name is required.';
 }
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-  $errors[] = 'A valid email is required.';
+if ($location === '') {
+  $errors[] = 'Location is required.';
 }
-if ($service === '') {
-  $errors[] = 'Please select a service.';
+if ($phone === '') {
+  $errors[] = 'Mobile number is required.';
+}
+if ($subject === '') {
+  $errors[] = 'Service is required.';
 }
 if (strlen($message) < 10) {
   $errors[] = 'Message must be at least 10 characters.';
@@ -33,11 +37,13 @@ if (!empty($errors)) {
 }
 
 $to      = 'emmanuelwiafe09@gmail.com';
-$subject = "New Inquiry from $name - $service";
+$email   = "inquiry@elitewebgraphics.com";
+$subject = "New Inquiry: $subject";
 
 $body  = "Name: $name\n";
-$body .= "Email: $email\n";
-$body .= "Service: $service\n\n";
+$body .= "Location: $location\n";
+$body .= "Phone: $phone\n";
+$body .= "Subject: $subject\n\n";
 $body .= "Message:\n$message\n";
 
 $headers  = "From: $email\r\n";
