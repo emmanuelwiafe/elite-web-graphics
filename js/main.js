@@ -384,12 +384,13 @@
   })();
 
   // ===== Dark Mode Toggle =====
+  var savedTheme = localStorage.getItem('site-theme');
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }
+
   var toggle = document.getElementById('themeToggle');
   if (toggle) {
-    var savedTheme = localStorage.getItem('site-theme');
-    if (savedTheme) {
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    }
     toggle.addEventListener('click', function () {
       var current = document.documentElement.getAttribute('data-theme');
       var next = current === 'dark' ? 'light' : 'dark';
