@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me - Emmanuel Wiafe</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+  <link rel="shortcut icon" href="favicon.ico" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    .about-hero {
+      background: linear-gradient(rgba(26, 26, 46, 0.7), rgba(22, 33, 62, 0.7)), url('img/Untitled-116.jpg') center/cover no-repeat;
+      color: #fff;
+      text-align: center;
+      padding: 7rem 0 3rem;
+    }
+    .about-hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .about-hero p {
+      color: #aaa;
+      font-size: 1.1rem;
+    }
+    .about-hero .profile-img {
+      display: block;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #007bff;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 8px 24px rgba(0, 123, 255, 0.3);
+    }
+    .about-detail-section {
+      padding: 4rem 0;
+    }
+    .about-detail-section .container {
+      max-width: 900px;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .info-card {
+      background: var(--dm-card-bg);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 4px 16px var(--dm-card-shadow);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
+      cursor: default;
+    }
+    .info-card:hover {
+      transform: translateY(-5px) scale(1.03);
+      box-shadow: 0 8px 30px rgba(0, 123, 255, 0.25);
+    }
+    .info-card:hover .info-icon {
+      animation: iconPulse 0.6s ease;
+    }
+    @keyframes iconPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+    .info-card .info-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(0, 123, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .info-card .info-icon i {
+      font-size: 1.2rem;
+      color: #007bff;
+    }
+    .info-card .info-text h4 {
+      font-size: 0.85rem;
+      color: var(--dm-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.2rem;
+      transition: color 0.4s ease;
+    }
+    .info-card .info-text p {
+      font-size: 1rem;
+      color: var(--dm-text);
+      font-weight: 500;
+      margin: 0;
+      transition: color 0.4s ease;
+    }
+    .info-card .info-text a {
+      color: var(--dm-text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .info-card .info-text a:hover {
+      color: #007bff;
+    }
+    .detail-heading {
+      font-size: 1.6rem;
+      color: var(--dm-heading);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: color 0.4s ease;
+    }
+    .detail-heading i {
+      color: #007bff;
+    }
+    .detail-text {
+      color: var(--dm-text-muted);
+      line-height: 1.9;
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      transition: color 0.4s ease;
+    }
+    .education-item {
+      background: var(--dm-card-bg);
+      border-radius: 0.75rem;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 4px 16px var(--dm-card-shadow);
+      border-left: 4px solid #007bff;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.4s ease;
+    }
+    .education-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0, 123, 255, 0.2);
+    }
+    .education-item h3 {
+      font-size: 1.15rem;
+      color: var(--dm-heading);
+      margin-bottom: 0.3rem;
+      transition: color 0.4s ease;
+    }
+    .education-item .edu-location {
+      color: #007bff;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+    .education-item p {
+      color: var(--dm-text-muted);
+      margin: 0;
+      transition: color 0.4s ease;
+    }
+    .lang-tags {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .lang-tag {
+      background: rgba(0, 123, 255, 0.1);
+      color: #007bff;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.3s, color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .lang-tag:hover {
+      background: #007bff;
+      color: #fff;
+      transform: scale(1.05);
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #007bff;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.4rem;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.3s, transform 0.2s;
+      margin-top: 1rem;
+    }
+    .back-btn:hover {
+      background: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    /* ===== Scroll Reveal ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .about-hero {
+        padding: 6rem 0 2rem;
+      }
+      .about-hero h1 {
+        font-size: 1.8rem;
+      }
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+      .about-detail-section {
+        padding: 3rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header" id="header">
+    <nav class="navbar container">
+      <a href="index.html" class="logo"><img src="img/logo.png" alt="Elite Web &amp; Graphics" /></a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </button>
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html#home" class="nav-link">Home</a></li>
+        <li><a href="index.html#about" class="nav-link">About</a></li>
+        <li><a href="index.html#services" class="nav-link">Services</a></li>
+        <li><a href="index.html#portfolio" class="nav-link">Portfolio</a></li>
+        <li><a href="index.html#testimonials" class="nav-link">Testimonials</a></li>
+        <li><a href="index.html#blog" class="nav-link">Blog</a></li>
+        <li><a href="index.html#contact" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <i class="fas fa-sun icon-sun"></i>
+    <i class="fas fa-moon icon-moon"></i>
+  </button>
+
+  <main>
+    <section class="about-hero">
+      <div class="container">
+        <img src="img/1.jpg" alt="Emmanuel Wiafe" class="profile-img" />
+        <h1>Emmanuel Wiafe</h1>
+        <p>Founder of Elite Web &amp; Graphics</p>
+      </div>
+    </section>
+
+    <section class="about-detail-section">
+      <div class="container">
+        <div class="info-grid">
+          <div class="info-card reveal" style="transition-delay: 0s;">
+            <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="info-text">
+              <h4>Location</h4>
+              <p>Takoradi, Ghana</p>
+            </div>
+          </div>
+          <div class="info-card reveal" style="transition-delay: 0.1s;">
+            <div class="info-icon"><i class="fas fa-flag"></i></div>
+            <div class="info-text">
+              <h4>Nationality</h4>
+              <p>Ghanaian</p>
+            </div>
+          </div>
+          <div class="info-card reveal" style="transition-delay: 0.2s;">
+            <div class="info-icon"><i class="fas fa-phone"></i></div>
+            <div class="info-text">
+              <h4>Contact</h4>
+              <p><a href="tel:+233559114156">0559114156</a></p>
+            </div>
+          </div>
+          <div class="info-card reveal" style="transition-delay: 0.3s;">
+            <div class="info-icon"><i class="fas fa-envelope"></i></div>
+            <div class="info-text">
+              <h4>Email</h4>
+              <p><a href="mailto:emmanuelwiafe09@gmail.com">emmanuelwiafe09@gmail.com</a></p>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="detail-heading reveal"><i class="fas fa-user"></i> Professional Summary</h2>
+        <p class="detail-text reveal">Highly motivated Networking Engineering student with a strong foundation in network design, troubleshooting, and telecommunications. Eager to leverage hands-on internship experience and academic knowledge to configure, maintain, and optimize robust network infrastructures. Possesses a strong passion for building responsive websites, dynamic web applications, and visually compelling digital designs, to apply these foundational skills to real-world challenges in a collaborative environment.</p>
+
+        <h2 class="detail-heading reveal"><i class="fas fa-graduation-cap"></i> Education</h2>
+        <div class="education-item reveal">
+          <h3>Bachelor of Technology in Information Technology (Networking) and Languages</h3>
+          <p class="edu-location"><i class="fas fa-university"></i> Takoradi Technical University | Takoradi, Ghana</p>
+          <div class="lang-tags">
+            <span class="lang-tag">English</span>
+            <span class="lang-tag">Twi</span>
+            <span class="lang-tag">Fante</span>
+          </div>
+        </div>
+
+        <a href="index.html#about" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Home</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-social">
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.tiktok.com/@kobina_amponsah?_r=1&_t=ZS-977jYHzpL2i" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+        <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/share/1D8HNpVh4f/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://snapchat.com/t/FiNFOw7B" target="_blank" rel="noopener noreferrer" aria-label="Snapchat"><i class="fab fa-snapchat"></i></a>
+      </div>
+      <div class="footer-contact">
+        <a href="mailto:emmanuelwiafe09@gmail.com"><i class="fas fa-envelope"></i> emmanuelwiafe09@gmail.com</a>
+        <a href="tel:+233559114156"><i class="fas fa-phone"></i> +233 (0) 559114156</a>
+        <span><i class="fas fa-map-marker-alt"></i> Takoradi</span>
+      </div>
+      <p>&copy; 2026 Elite Web &amp; Graphics. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <a href="https://wa.link/rnzuws" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Chat on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+    <i class="fas fa-sun icon-sun"></i>
+    <i class="fas fa-moon icon-moon"></i>
+  </button>
+
+  <script src="js/main.js"></script>
+  <script>
+    // ===== Scroll Reveal =====
+    var reveals = document.querySelectorAll('.reveal');
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(function (el) {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
