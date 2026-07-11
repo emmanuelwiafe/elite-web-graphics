@@ -234,7 +234,7 @@ html[data-theme="dark"] .nav-link:hover {
 /* ===== Theme Toggle Button ===== */
 .theme-toggle {
   position: fixed;
-  bottom: 11rem;
+  bottom: 5rem;
   right: 1.5rem;
   z-index: 1001;
   width: 48px;
